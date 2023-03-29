@@ -31,7 +31,6 @@
         :precondition (and (IsConnected ?x ?y) 
                      (Robotloc RM ?x)
                      (not (= ?x ?y))
-                     (or (not(Holding RM)) (Holdwhat RM Hammer) ) 
                        )
                      
         :effect (and (Robotloc RM ?y) (not (Robotloc RM ?x)))
@@ -65,12 +64,24 @@
         :parameters (?x - cell ?o - holdable)
         :precondition (and  (Robotloc RM ?x)
                              (not(IsObstaclein ?x Rock))
-                             (IsHoldablein ?x ?o)
-                             (isOre ?o)   
+                             (not(Holding RM))
+                             (isOre ?o)  
+                             (IsHoldablein ?x ?o) 
                       )
-        :effect (and  (not(Holdwhat RM Hammer)) (IsHoldablein ?x Hammer) (not(Robotloc RM ?x)) (Holdwhat RM ?o) (not(IsHoldablein ?x ?o)) (Robotloc RM Lift) (Holding RM))     ; robot picks up the ore and teleports to the lift and here I have avoide
+        :effect (and (Holdwhat RM ?o) (not(IsHoldablein ?x ?o)) (Holding RM))     ; robot picks up the ore and teleports to the lift and here I have avoide
     ; teleports after getting ore to the lift for now 
     )
+
+    (:action DropHoldable
+        :parameters (?x - cell ?h - holdable)
+        :precondition (and 
+            (Robotloc RM ?x)
+            (not(isOre ?h)) ; cannot drop an ore down unless its lift 
+            (Holding RM)
+            (Holdwhat RM ?h)
+        )
+        :effect (and  (not(Holding RM ))(not(Holdwhat RM ?h)) (IsHoldablein ?x ?h))
+    )   
 
     (:action LiftOn
         :parameters (?o - holdable)
