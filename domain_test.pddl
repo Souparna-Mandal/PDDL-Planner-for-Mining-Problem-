@@ -3,7 +3,7 @@
     
     (:types table block)
     
-    (:predicates 
+    (:predicates sstratr=stt
         (On ?x - block ?y - object)
         (Clear ?b - object)
     )
