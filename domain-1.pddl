@@ -63,8 +63,8 @@
 
     (:action LiftOn
         :parameters (?o - holdable)
-        :precondition(and ((Robotloc RM Lift) (not(isLifton ?0)) (Holdwhat RM ?o) (isOre ?o)))
-        :effect(and ((isLifton ?o) )) ; something is mined if lift is on with that ore 
+        :precondition(and ((Robotloc RM Lift) (Holdwhat RM ?o) (not(isLifton ?0)) (isOre ?o)))
+        :effect(and ((isLifton ?o) not((Holdwhat RM ?o ))) ; something is mined if lift is on with that ore 
     )
 
 
