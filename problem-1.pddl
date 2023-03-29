@@ -5,28 +5,28 @@
         A - holdable
         B - holdable
         C - holdable
-        1 - cell
-        2 - cell
-        3 - cell
-        4 - cell
-        5 - cell
-        6 - cell
-        7 - cell
-        8 - cell
-        9 - cell
-        10 - cell
-        11 - cell
-        12 - cell
-        13 - cell
-        14 - cell
-        15 - cell
-        16 - cell
-        17 - cell
-        18 - cell
-        19 - cell
-        20 - cell
-        21 - cell
-        22 - cell
+        c1 - cell
+        c2 - cell
+        c3 - cell
+        c4 - cell
+        c5 - cell
+        c6 - cell
+        c7 - cell
+        c8 - cell
+        c9 - cell
+        c10 - cell
+        c11 - cell
+        c12 - cell
+        c13 - cell
+        c14 - cell
+        c15 - cell
+        c16 - cell
+        c17 - cell
+        c18 - cell
+        c19 - cell
+        c20 - cell
+        c21 - cell
+        c22 - cell
         )
             
 
@@ -36,46 +36,69 @@
         (isOre A)
         (isOre B)
         (isOre C)
-        (isobstaclein 10 Rock)
-        (isobstaclein 8 Rock)
-        (isobstaclein 3 Rock)
-        (IsHoldablein 8 Hammer)
-        (IsHoldablein 1 A)
-        (IsHoldablein 10 C)
-        (IsHoldablein 3 B)
+        (isobstaclein c10 Rock)
+        (isobstaclein c8 Rock)
+        (isobstaclein c3 Rock)
+        (IsHoldablein c8 Hammer)
+        (IsHoldablein c1 A)
+        (IsHoldablein c10 C)
+        (IsHoldablein c3 B)
 
-        (Robotloc RM 17)
+        (Robotloc RM c17)
 
-        (IsConnected 1 5)
-        (IsConnected 4 5)
-        (IsConnected 6 5)
-        (IsConnected 4 9)
-        (IsConnected 6 10)
-        (IsConnected 8 9)
-        (IsConnected 9 13)
-        (IsConnected 10 15)
-        (IsConnected 13 14)
-        (IsConnected 14 15)
-        (IsConnected 15 16)
-        (IsConnected 16 17)
-        (IsConnected 17 19)
-        (IsConnected 19 22)
-        (IsConnected 21 Lift)
-        (IsConnected 21 22)
-        (IsConnected 21 20)
-        (IsConnected 20 18)
-        (IsConnected 18 15)
-        (IsConnected 11 17)
-        (IsConnected 11 12)
-        (IsConnected 11 7)
-        (IsConnected 7 2)
-        (IsConnected 2 3)
+        (IsConnected c1 c5)
+        (IsConnected c4 c5)
+        (IsConnected c6 c5)
+        (IsConnected c4 c9)
+        (IsConnected c6 c10)
+        (IsConnected c8 c9)
+        (IsConnected c9 c13)
+        (IsConnected c10 c15)
+        (IsConnected c13 c14)
+        (IsConnected c14 c15)
+        (IsConnected c15 c16)
+        (IsConnected c16 c17)
+        (IsConnected c17 c19)
+        (IsConnected c19 c22)
+        (IsConnected c21 Lift)
+        (IsConnected c21 c22)
+        (IsConnected c21 c20)
+        (IsConnected c20 c18)
+        (IsConnected c18 c15)
+        (IsConnected c11 c17)
+        (IsConnected c11 c12)
+        (IsConnected c11 c7)
+        (IsConnected c7 c2)
+        (IsConnected c2 c3)
 
+        
+
+        (IsConnected c5 c1)
+        (IsConnected c5 c4)
+        (IsConnected c5 c6)
+        (IsConnected c9 c4)
+        (IsConnected c10 c6)
+        (IsConnected c9 c8)
+        (IsConnected c13 c9)
+        (IsConnected c15 c10)
+        (IsConnected c14 c13)
+        (IsConnected c15 c14)
+        (IsConnected c16 c15)
+        (IsConnected c17 c16)
+        (IsConnected c19 c18)
+        (IsConnected c22 c19)
+        (IsConnected Lift c21)
+        (IsConnected c22 c21)
+        (IsConnected c20 c21)
+        (IsConnected c18 c20)
+        (IsConnected c15 c18)
+        (IsConnected c17 c11)
+        (IsConnected c12 c11)
+        (IsConnected c7 c11)
+        (IsConnected c2 c7)
+        (IsConnected c3 c2)
     )
-    (:goal (and
-        (isLifton A)
-        (isLifton B)
-        (isLifton C)
-    ))
+    
+    (:goal (and (isLiftOn A) (isLifton B) (isLifton C)))
 
 )

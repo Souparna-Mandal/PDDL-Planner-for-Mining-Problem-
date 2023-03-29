@@ -8,57 +8,63 @@
 
         (IsHoldablein ?c -cell ?h -holdable ) ; does the cell have objects like hammer, ore
 
-        (IsObstaclein ?c -cell ?o -obstacle) ; if both isobstaclein and is holdablein true then rocks are blocking ores given holdable are ores and obstacles are rocks 
+        (IsObstaclein ?c -cell ?o -obstacle) ; does the cell have an obstacle like Rock 
 
-        (Holdwhat ?r - robot ?h -holdable) ; what holdable is the robot holding 
+        (Holdwhat ?r - robot ?h -holdable) ; what item is the robot holding 
 
         ; now for layout of the mine coordidoors
         (Robotloc ?r -robot ?c -cell) ; tells us currect loc of the robot 
-        (IsConnected ?c1 -cell ?c2 -cell) ; whether two cells are connecter or not 
+        (IsConnected ?x -cell ?y-cell) ; whether two cells are connecter or not 
         (isOre ?h -holdable) ; is the holdable an ore
-        (isLifton ?h - holdable) ; checks if the holdable is ore then is it mined 
-    )  
-    (:constants Lift - cell Hammer - holdable Rock - obstacle Ore - holdable RM - robot)
+        (isLifton ?h - holdable) ; has the ore been mined? if yes then lift for that ore should be 1 
+    )
+
+
+    (:constants Lift - cell Hammer - holdable Rock - obstacle RM - robot)
+
+    
+
+
 
     (:action Move
-        :parameters (?c1 - cell ?c2-cell)
-        :precondition (and  (IsConnected ?c1 ?c2) 
-                            (Robotloc RM ?c1)
-                            (not(= ?c1 ?c2)
-                            )    
-                      )
-        :effect (and (Robotloc RM ?c2) (not (Robotloc RM ?c1) )
-    ))
+        :parameters (?x -cell ?y -cell)
+        :precondition (and (IsConnected ?x ?y) 
+                     (Robotloc RM ?x)
+                     (not (= ?x ?y)))
+        :effect (and (Robotloc RM ?y) (not (Robotloc RM ?x)))
+    )
+
+    
 
     (:action Pickup
-        :parameters (?h - holdable ?c1 - cell)
-        :precondition (and  (Robotloc RM ?c1)
-                             (IsHoldablein ?c1 Hammer)
+        :parameters (?h - holdable ?x - cell)
+        :precondition (and  (Robotloc RM ?x)
+                             (IsHoldablein ?x Hammer) ; cell , item 
                              (not (Holding RM))
                       )
-        :effect (and  (Holdwhat RM Hammer) (not (IsHoldablein ?c1 Hammer)) (Holding RM))
+        :effect (and  (Holdwhat RM Hammer) (not (IsHoldablein ?x Hammer)) (Holding RM))
     )
 
     (:action BreakRock
-        :parameters (?c1 -cell ?o - holdable ) ; a holdable ore is passed in 
-        :precondition (and  (Robotloc RM ?c1)
+        :parameters (?x -cell ?o - holdable ) ; a holdable ore is passed in 
+        :precondition (and  (Robotloc RM ?x)
                              (Holdwhat RM Hammer) 
-                             (IsObstaclein ?c1 Rock)
-                             (IsHoldablein ?c1 ?o)
+                             (IsObstaclein ?x Rock)
+                             (IsHoldablein ?x ?o)
                              (isOre ?o)
                              ) 
                        
-        :effect ( not(IsObstaclein ?c1 Rock) )
+        :effect ( not(IsObstaclein ?x Rock) )
     )
 
     (:action GetOre
-        :parameters (?c1 - cell ?o - holdable)
-        :precondition (and  (Robotloc RM ?c1)
-                             (not(IsObstaclein ?c1 Rock))
-                             (IsHoldablein ?c1 ?o)
+        :parameters (?x - cell ?o - holdable)
+        :precondition (and  (Robotloc RM ?x)
+                             (not(IsObstaclein ?x Rock))
+                             (IsHoldablein ?x ?o)
                              (isOre ?o)   
                       )
-        :effect (and  (not(Holdwhat RM Hammer)) (Holdwhat RM ?o) (not(IsHoldablein ?c1 ?o)) (Robotloc RM Lift))     ; robot picks up the ore and teleports to the lift and here I have avoide
+        :effect (and  (not(Holdwhat RM Hammer)) (Holdwhat RM ?o) (not(IsHoldablein ?x ?o)) (Robotloc RM Lift))     ; robot picks up the ore and teleports to the lift and here I have avoide
 
     )
 
