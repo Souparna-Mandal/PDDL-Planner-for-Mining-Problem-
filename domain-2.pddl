@@ -1,7 +1,7 @@
 (define (domain mine-world) ; HOW DO I KEEP TRACK OF THE CURRENT LOC OF THE ROBOT ? 
 
     (:requirements:adl)                    ; if extending the problem you need to come up with ways to make other objects also holdable and get rid of teleport after ore collection 
-    (:types robot holdable obstacle cell battery-used)  ; pickaxe,ore are holdable, rocks are obstacle , lift is a cell 
+    (:types robot holdable obstacle cell)  ; pickaxe,ore are holdable, rocks are obstacle , lift is a cell 
     (:predicates
         
         (Holding ?r -robot) ; robot holding something or not 
@@ -17,7 +17,7 @@
         (IsConnected ?x -cell ?y-cell) ; whether two cells are connecter or not 
         (isOre ?h -holdable) ; is the holdable an ore
         (isLifton ?h - holdable) ; has the ore been mined? if yes then lift for that ore should be 1 
-
+        (Chargeron ?x - cell); checks if the charger is on the cell 
         ; looks at the battery of the robot 
 
     ) 
@@ -101,7 +101,7 @@
 
     (:action Battery_Recharge
         :parameters (?x -cell ?r -robot)
-        :precondition  (Robotloc RM ?x)                           
+        :precondition  (and (Robotloc RM ?x)  (Chargeron ?x) (<= (battery-level RM) 20 ))  ; last condition is to reduce recharges                        
         :effect (assign (battery-level RM) 40) 
     
     )

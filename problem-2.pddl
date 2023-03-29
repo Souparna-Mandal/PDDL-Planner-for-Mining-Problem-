@@ -98,6 +98,7 @@
         (IsConnected c2 c7)
         (IsConnected c3 c2)
 
+        (Chargeron c12)
         (= (battery-level RM) 40)
         (= (battery-used) 1)
     )
