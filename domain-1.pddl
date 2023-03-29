@@ -30,14 +30,18 @@
         :parameters (?x -cell ?y -cell)
         :precondition (and (IsConnected ?x ?y) 
                      (Robotloc RM ?x)
-                     (not (= ?x ?y)))
+                     (not (= ?x ?y))
+                     (or (not(Holding RM)) (Holdwhat RM Hammer) ) 
+                       )
+                     
         :effect (and (Robotloc RM ?y) (not (Robotloc RM ?x)))
     )
+    
 
     
 
     (:action Pickup
-        :parameters (?h - holdable ?x - cell)
+        :parameters (?x - cell)
         :precondition (and  (Robotloc RM ?x)
                              (IsHoldablein ?x Hammer) ; cell , item 
                              (not (Holding RM))
@@ -64,14 +68,14 @@
                              (IsHoldablein ?x ?o)
                              (isOre ?o)   
                       )
-        :effect (and  (not(Holdwhat RM Hammer)) (Holdwhat RM ?o) (not(IsHoldablein ?x ?o)) (Robotloc RM Lift))     ; robot picks up the ore and teleports to the lift and here I have avoide
-
+        :effect (and  (not(Holdwhat RM Hammer)) (IsHoldablein ?x Hammer) (not(Robotloc RM ?x)) (Holdwhat RM ?o) (not(IsHoldablein ?x ?o)) (Robotloc RM Lift) (Holding RM))     ; robot picks up the ore and teleports to the lift and here I have avoide
+    ; teleports after getting ore to the lift for now 
     )
 
     (:action LiftOn
         :parameters (?o - holdable)
         :precondition(and (Robotloc RM Lift) (Holdwhat RM ?o) (not(isLifton ?o)) (isOre ?o))
-        :effect(and (isLifton ?o) (not(Holdwhat RM ?o ))) ; something is mined if lift is on with that ore 
+        :effect(and (isLifton ?o) (not(Holdwhat RM ?o )) (not(Holding RM))) ; something is mined if lift is on with that ore 
     )
     
 
