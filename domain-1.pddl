@@ -15,7 +15,8 @@
         ; now for layout of the mine coordidoors
         (Robotloc ?r -robot ?c -cell) ; tells us currect loc of the robot 
         (IsConnected ?c1 -cell ?c2 -cell) ; whether two cells are connecter or not 
-    
+        (isOre ?h -holdable) ; is the holdable an ore
+        (isLifton ?h - holdable) ; checks if the holdable is ore then is it mined 
     )  
     (:constants Lift - cell Hammer - holdable Rock - obstacle Ore - holdable RM - robot)
 
@@ -37,24 +38,37 @@
     )
 
     (:action BreakRock
-        :parameters (? c1-cell)
-        :precondition ((and  ((Robotloc RM ?c1)
+        :parameters (?c1 -cell ?o holdable ) ; a holdable ore is passed in 
+        :precondition (and  ((Robotloc RM ?c1)
                              (Holdwhat RM Hammer) 
                              (IsObstaclein ?c1 Rock)
-                             (IsHoldablein ?c1 Ore)) )
+                             (IsHoldablein ?c1 ?o)
+                             (isOre ?o)
+                             ) 
                       ) 
         :effect (and ((not(IsObstaclein ?c1 Rock)) ) )
     )
 
-    (:action Mine
-        :parameters (c1 - cell)
+    (:action GetOre
+        :parameters (?c1 - cell ?o holdable)
         :precondition (and  ((Robotloc RM ?c1)
                              (not(IsObstaclein ?c1 Rock))
-                             (IsHoldablein ?c1 Ore)
+                             (IsHoldablein ?c1 ?o)
+                             (isOre ?o)
                             )
                       )
-        :effect (and ( (not(Holdwhat RM Hammer)) (not(IsHoldablein ?c1 Ore)) (Robotloc RM Lift)))     ; robot picks up the ore and teleports to the lift 
-    )    
+        :effect (and ( (not(Holdwhat RM Hammer)) (Holdwhat RM ?o) (not(IsHoldablein ?c1 ?o)) (Robotloc RM Lift)))     ; robot picks up the ore and teleports to the lift and here I have avoide
+
+    )
+
+    (:action LiftOn
+        :parameters (?o - holdable)
+        :precondition(and ((Robotloc RM Lift) (not(isLifton ?0)) (Holdwhat RM ?o) (isOre ?o)))
+        :effect(and ((isLifton ?o) )) ; something is mined if lift is on with that ore 
+    )
+
+
+
 )
 
 
