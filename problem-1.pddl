@@ -1,5 +1,5 @@
 (define (problem mine-problem1)
-    (:domain mine-world)
+    (:domain mine-world1)
 
         (:objects 
         A - holdable
