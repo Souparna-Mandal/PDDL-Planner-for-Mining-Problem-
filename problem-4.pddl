@@ -5,8 +5,6 @@
         A - holdable
         B - holdable
         C - holdable
-        ; D - holdable
-        helper - robot ; this is robot 2
         c1 - cell
         c2 - cell
         c3 - cell
@@ -29,6 +27,10 @@
         c20 - cell
         c21 - cell
         c22 - cell
+            
+        robo2 - robot
+        D - holdable
+            
         )
             
 
@@ -38,8 +40,6 @@
         (isOre A)
         (isOre B)
         (isOre C)
-        ; (isOre D)
-        ; (isbigOre D)
         (isFire c7)
         (isobstaclein c10 Rock)
         (isobstaclein c8 Rock)
@@ -49,11 +49,10 @@
         (IsHoldablein c1 A)
         (IsHoldablein c10 C)
         (IsHoldablein c3 B)
-        ; (IsHoldablein c13 D)
         (IsHoldablein c14 Extinguisher)
 
         (Robotloc RM c17)
-        (Robotloc helper c4)
+        (Robotloc robo2 c4)
 
         (IsConnected c1 c5)
         (IsConnected c4 c5)
@@ -109,11 +108,17 @@
 
         (Chargeron c12)
         (= (battery-level RM) 40)
-        (= (battery-used RM) 1)
-        (= (battery-level helper) 40)
-        (= (battery-used helper) 1)
+        (= (battery-used RM ) 1)
+        (= (battery-level robo2) 40)
+        (= (battery-used robo2) 1)
+
+        (isOre D)
+        (IsHoldablein c13 D)
+        (isBigOre D)
+
+
     )
     
-    (:goal (and (isLiftOn A) (isLifton B) (isLifton C))) ; (isLifton D)
+    (:goal (and (isLiftOn A) (isLifton B) (isLifton C)(isLifton D) ))
 
 )
