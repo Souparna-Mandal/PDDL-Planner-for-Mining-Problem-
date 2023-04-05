@@ -28,7 +28,7 @@
         c21 - cell
         c22 - cell
             
-        robo2 - robot
+        RM2 - robot
         D - holdable
             
         )
@@ -52,7 +52,7 @@
         (IsHoldablein c14 Extinguisher)
 
         (Robotloc RM c17)
-        (Robotloc robo2 c4)
+        (Robotloc RM2 c4)
 
         (IsConnected c1 c5)
         (IsConnected c4 c5)
@@ -109,8 +109,8 @@
         (Chargeron c12)
         (= (battery-level RM) 40)
         (= (battery-used RM ) 1)
-        (= (battery-level robo2) 40)
-        (= (battery-used robo2) 1)
+        (= (battery-level RM2) 40)
+        (= (battery-used RM2) 1)
 
         (isOre D)
         (IsHoldablein c13 D)

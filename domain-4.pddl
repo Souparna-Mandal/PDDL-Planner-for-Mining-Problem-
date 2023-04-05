@@ -129,6 +129,7 @@
                 (Robotloc ?k ?x)
                 (isBigOre ?o)
                 (IsHoldablein ?x ?o)
+                (not(IsObstaclein ?x Rock))
                 ( not(= ?r ?k))
 
          )
